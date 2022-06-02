@@ -1,0 +1,23 @@
+{
+    "locations": {
+        "United Arab Emirates": [
+          "Abu Dhabi",
+          "Al Ain",
+          "Al Khan",
+          "Ar Ruways",
+          "As Satwah",
+          "Dayrah",
+          "Dubai",
+          "Fujairah",
+          "Ras al-Khaimah",
+          "Sharjah"
+        ]
+    },
+    "facilities": [
+        "Breakfast",
+        "Wifi",
+        "Parking",
+        "Spa",
+        "Gym"
+    ]
+}

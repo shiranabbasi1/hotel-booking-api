@@ -1,3 +1,6 @@
+using HotelBookingApi.Config.Seed;
+using HotelBookingApi.Services.Implementations;
+using HotelBookingApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookingApi.Controllers
@@ -7,7 +10,9 @@ namespace HotelBookingApi.Controllers
     public class HomeController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public HomeController(IConfiguration configuration)
+        public HomeController(IConfiguration configuration,
+            IFileServiceResolver fileServiceResolver,
+            SeedSettings seedSettings)
         {
             _configuration = configuration;
         }

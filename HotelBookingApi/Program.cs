@@ -1,5 +1,10 @@
+using HotelBookingApi.Config.File;
+using HotelBookingApi.Config.Seed;
 using HotelBookingApi.Models;
+using HotelBookingApi.Services.Implementations;
+using HotelBookingApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddControllers();
+
+builder.Services.Configure<FileSettings>(builder.Configuration.GetSection(nameof(FileSettings)));
+builder.Services.AddSingleton<FileSettings>(x => x.GetRequiredService<IOptions<FileSettings>>().Value);
+
+builder.Services.Configure<SeedSettings>(builder.Configuration.GetSection(nameof(SeedSettings)));
+builder.Services.AddSingleton<SeedSettings>(x => x.GetRequiredService<IOptions<SeedSettings>>().Value);
+
+builder.Services.AddSingleton<IFileServiceResolver, FileServiceResolver>();
 
 builder.Services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionString, x => x.EnableRetryOnFailure()), ServiceLifetime.Singleton);
 
