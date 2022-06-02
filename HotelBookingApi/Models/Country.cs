@@ -7,6 +7,6 @@ namespace HotelBookingApi.Models
         public long Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public IList<City> Cities { get; set; }
+        public virtual IList<City> Cities { get; set; }
     }
 }

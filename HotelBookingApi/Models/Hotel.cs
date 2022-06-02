@@ -12,7 +12,7 @@ namespace HotelBookingApi.Models
         public string Zip { get; set; }
         [Required]
         public long CityId { get; set; }
-        public City City { get; set; }
-        public IList<HotelFacility> HotelFacilities { get; set; }
+        public virtual City City { get; set; }
+        public virtual IList<HotelFacility> HotelFacilities { get; set; }
     }
 }

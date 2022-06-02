@@ -1,6 +1,9 @@
+using HotelBookingApi.Config.AutoMapper;
 using HotelBookingApi.Config.File;
 using HotelBookingApi.Config.Seed;
 using HotelBookingApi.Models;
+using HotelBookingApi.Repositories.Implementations;
+using HotelBookingApi.Repositories.Interfaces;
 using HotelBookingApi.Services.Implementations;
 using HotelBookingApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +12,8 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 string connectionString = builder.Configuration.GetConnectionString("Default");
 
@@ -20,9 +25,12 @@ builder.Services.AddSingleton<FileSettings>(x => x.GetRequiredService<IOptions<F
 builder.Services.Configure<SeedSettings>(builder.Configuration.GetSection(nameof(SeedSettings)));
 builder.Services.AddSingleton<SeedSettings>(x => x.GetRequiredService<IOptions<SeedSettings>>().Value);
 
-builder.Services.AddSingleton<IFileServiceResolver, FileServiceResolver>();
+builder.Services.AddSingleton<IGenericRepository, GenericRepository>();
 
-builder.Services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionString, x => x.EnableRetryOnFailure()), ServiceLifetime.Singleton);
+builder.Services.AddSingleton<IFileServiceResolver, FileServiceResolver>();
+builder.Services.AddSingleton<IHotelService, HotelService>();
+
+builder.Services.AddDbContext<ApplicationContext>(o => o.UseLazyLoadingProxies().UseSqlServer(connectionString, x => x.EnableRetryOnFailure()), ServiceLifetime.Singleton);
 
 var app = builder.Build();
 

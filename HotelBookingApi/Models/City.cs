@@ -9,7 +9,7 @@ namespace HotelBookingApi.Models
         public string Name { get; set; }
         [Required]
         public long CountryId { get; set; }
-        public Country Country { get; set; }
-        public IList<Hotel> Hotels { get; set; }
+        public virtual Country Country { get; set; }
+        public virtual IList<Hotel> Hotels { get; set; }
     }
 }
